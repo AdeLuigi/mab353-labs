@@ -89,7 +89,7 @@ int32_t ehZero(int32_t x) {
  *          ehImpar(7) -> 1
  */
 int32_t ehImpar(int32_t x) {
-    return -1;
+    return (x & 1);
 }
 
 /*
@@ -107,7 +107,7 @@ int32_t ehImpar(int32_t x) {
  *          mod4(7) -> 3
  */
 int32_t mod4(int32_t x) {
-    return -1;
+    return x & 3;
 }
 
 /*
@@ -143,10 +143,7 @@ int32_t ehPositivo(int32_t x) {
  *          negativo(42) -> -42
  */
 int32_t negativo(int32_t x) {
-
-/*     int32_t y = ehPositivo(x);
-
-    return (x | 0b10000000000000000000000000000000 ); */
+    return ~x + 1;
 }
 
 /*
@@ -166,7 +163,7 @@ int32_t negativo(int32_t x) {
  *              11 | 1001 -> 1011
  */
 int32_t bitwiseOr(int32_t x, int32_t y) {
-    return -1;
+    return x | y;
 }
 
 /*
@@ -183,7 +180,7 @@ int32_t bitwiseOr(int32_t x, int32_t y) {
  *          mult6(36) -> 216
  */
 int32_t mult6(int32_t x) {
-    return -1;
+    return (x << 2) + x + x;
 }
 
 /*
@@ -213,7 +210,7 @@ int32_t mult6(int32_t x) {
  *
  */
 int32_t bitEmP(int32_t x, uint8_t p) {
-    return -1;
+    return (x >> p) & 1;
 }
 
 /*
@@ -239,7 +236,7 @@ int32_t bitEmP(int32_t x, uint8_t p) {
  *
  */
 int32_t byteEmP(int32_t x, uint8_t p) {
-    return -1;
+    return (x >> (p << 3)) & 0xFF;
 }
 
 /*
@@ -258,7 +255,7 @@ int32_t byteEmP(int32_t x, uint8_t p) {
  *
  */
 int32_t negacaoLogica(int32_t x) {
-    return -1;
+    return ((x >> 31) | ((~x + 1) >> 31)) + 1;
 }
 
 void teste(int32_t saida, int32_t esperado) {
