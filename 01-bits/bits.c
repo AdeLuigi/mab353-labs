@@ -21,9 +21,9 @@
  *      - As resoluções com menos operações do que a do monitor terão bonificação.
  *
  * Assinatura:
- *      Aluno: <nome>
- *      DRE: <DRE>
- *      versão do GCC utilizada: XX.XX.XX
+ *      Aluno: Matheus da Silva Oliveira
+ *      DRE: 118178020
+ *      versão do GCC utilizada: 5.4.0
  *
  * Se descobrir algo errado, inesperado ou engraçado com o código,
  * entre em contato com o monitor!
@@ -90,6 +90,8 @@ int32_t ehZero(int32_t x) {
  */
 int32_t ehImpar(int32_t x) {
     return (x & 1);
+    //O bit menos significativo de um número ímpar sempre é igual a 1 
+    
 }
 
 /*
@@ -108,6 +110,11 @@ int32_t ehImpar(int32_t x) {
  */
 int32_t mod4(int32_t x) {
     return x & 3;
+    /* O resto de uma divisão por 4 pode ser apenas 0,1,2 ou 3.
+    * Sendo assim, o AND é necessário para que esse limite seja seguido.
+    * Esta operação checará se o número usa as 2 últimas casas para compor o número.
+    * Caso use as 2 últimas casas, sabemos que não é divisível por 4, ou seja, possui um resto.
+    */
 }
 
 /*
@@ -144,6 +151,7 @@ int32_t ehPositivo(int32_t x) {
  */
 int32_t negativo(int32_t x) {
     return ~x + 1;
+    //Usamos a ideia do Complemento a 2 aqui. Invertemos todos os bits e somamos 1
 }
 
 /*
@@ -163,7 +171,8 @@ int32_t negativo(int32_t x) {
  *              11 | 1001 -> 1011
  */
 int32_t bitwiseOr(int32_t x, int32_t y) {
-    return x | y;
+    return ~(~x & ~y);
+    //Aqui usamos o teorema de De Morgan: (A|B) = ~(~(A|B)) = ~(~A & ~B) 
 }
 
 /*
@@ -181,6 +190,8 @@ int32_t bitwiseOr(int32_t x, int32_t y) {
  */
 int32_t mult6(int32_t x) {
     return (x << 2) + x + x;
+    //Multiplicamos por 4 ao shiftarmos e depois somamos duas vezes o x
+    //ou seja : (x * 4) + 2*x =  6*x
 }
 
 /*
@@ -211,6 +222,9 @@ int32_t mult6(int32_t x) {
  */
 int32_t bitEmP(int32_t x, uint8_t p) {
     return (x >> p) & 1;
+    /*Shiftamos o x p casas para a direita para que o bit fique na posição menos significativa
+    * e utilizamos o "& 1" para retornar apenas o LSB
+    */
 }
 
 /*
@@ -237,6 +251,8 @@ int32_t bitEmP(int32_t x, uint8_t p) {
  */
 int32_t byteEmP(int32_t x, uint8_t p) {
     return (x >> (p << 3)) & 0xFF;
+    // Aqui temos a mesma ideia de "bitEmP", porém devemos pensar que um byte possui 8 bits
+
 }
 
 /*
@@ -256,6 +272,12 @@ int32_t byteEmP(int32_t x, uint8_t p) {
  */
 int32_t negacaoLogica(int32_t x) {
     return ((x >> 31) | ((~x + 1) >> 31)) + 1;
+    /* Quando x = 0 temos todos os bits iguais a 0.
+    * Ao fazer este OU, se x = 0, então temos 0 | 0 = 0 porque +0 = -0 em complemento a 2
+    * Somando 1 temos o resultado correto para x = 0 (return 1).
+    * Os demais valores (x != 0) "retornam" -1 na primeira parte devido o MSB ser igual a 1 por causa das operações.
+    * Neste caso, temos um valor negativo que no caso é -1 que depois de somando a 1 é igual a 0.
+    */
 }
 
 void teste(int32_t saida, int32_t esperado) {
