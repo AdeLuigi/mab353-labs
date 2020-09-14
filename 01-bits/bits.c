@@ -52,8 +52,9 @@
  *          ehDiferente(16, 8) -> 1
  */
 int32_t ehDiferente(int32_t x, int32_t y) {
-   
-    return !(x ^ y) ^ (1);
+   // o ou exclusivo é verdadeiro quando só um dos bits comparados é 1, então logicamente ele dá 0 quando os dois números são iguais
+   // o operador ! nega logicamente a expressão, o true vira false e o false vira true, então o ! faz o papel de dar o retorno de 0 ou 1 que o teste precisa
+    return !(x ^ y) ^ 1;
 }
 
 /*
@@ -71,7 +72,10 @@ int32_t ehDiferente(int32_t x, int32_t y) {
  *          ehZero(7) -> 0
  */
 int32_t ehZero(int32_t x) {
-    return !(x & ~0) ;
+    // o ou exlusivo pode ser usado para verificar se os bits são diferentes
+    // o ! foi usado para negar logicamente a expressão e assim retornar 1 ou 0
+
+    return !(x ^ 0) ;
 }
 
 /*
@@ -125,6 +129,9 @@ int32_t mod4(int32_t x) {
  *          ehPositivo(-343) -> 0
  */
 int32_t ehPositivo(int32_t x) {
+    // fazendo um and de x com 0b10000000000000000000000000000000, verificamos se o bit mais significativo é 1
+    // usamos o operador lógico ! para dar como resultado 1 ou 0 dependo do valor
+    // note que  todos os números negativos vão para -2147483648
     return !(x & 0b10000000000000000000000000000000);
 }
 
